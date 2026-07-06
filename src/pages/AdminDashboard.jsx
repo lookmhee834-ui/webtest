@@ -406,12 +406,12 @@ export default function AdminDashboard({
           
           <form onSubmit={handleLogin}>
             <div className="form-group">
-              <label className="form-label" htmlFor="password">รหัสผ่านหลังบ้าน (Default: 1234)</label>
+              <label className="form-label" htmlFor="password">รหัสผ่านหลังบ้าน</label>
               <input 
                 type="password" 
                 id="password" 
                 className="form-input" 
-                placeholder="ป้อนรหัสผ่านหลังบ้าน..." 
+                placeholder="ป้อนรหัสผ่านหลังบ้านเพื่อเข้าสู่ระบบ..." 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

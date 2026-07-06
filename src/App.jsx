@@ -23,6 +23,31 @@ export default function App() {
   const [modalData, setModalData] = useState(null);
   const [modalType, setModalType] = useState('travel'); // travel or article
 
+  // Secret Admin states
+  const [showAdminTab, setShowAdminTab] = useState(false);
+  const [adminClicks, setAdminClicks] = useState(0);
+
+  // Check URL parameters for admin=true
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === 'true') {
+      setShowAdminTab(true);
+    }
+  }, []);
+
+  // Secret click trigger on footer
+  const handleFooterClick = () => {
+    setAdminClicks(prev => {
+      const next = prev + 1;
+      if (next >= 5) {
+        setShowAdminTab(true);
+        setCurrentTab('admin');
+        return 0;
+      }
+      return next;
+    });
+  };
+
   // Scroll to top and adjust scrollability on tab change
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -90,7 +115,7 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} showAdminTab={showAdminTab} />
 
       <main style={{ flexGrow: 1 }}>
         {currentTab === 'home' && (
@@ -145,9 +170,9 @@ export default function App() {
 
       {/* Footer */}
       {currentTab !== 'home' && (
-        <footer className="footer">
+        <footer className="footer" onClick={handleFooterClick} style={{ cursor: 'default' }}>
           <div className="footer-container">
-            <p className="footer-copy">
+            <p className="footer-copy" style={{ userSelect: 'none' }}>
               &copy; {new Date().getFullYear()}. เชื่อมต่อฐานข้อมูล Supabase สำหรับเก็บบันทึกข้อมูลการท่องเที่ยวและศิลปะ
             </p>
           </div>

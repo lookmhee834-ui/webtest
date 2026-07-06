@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon, Compass } from 'lucide-react';
 
-export default function Navbar({ currentTab, setCurrentTab }) {
+export default function Navbar({ currentTab, setCurrentTab, showAdminTab }) {
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('journal_theme') || 'light';
@@ -16,7 +16,7 @@ export default function Navbar({ currentTab, setCurrentTab }) {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  const navItems = [
+  const allNavItems = [
     { id: 'home', label: 'หน้าแรก' },
     { id: 'travel', label: 'บันทึกการเดินทาง' },
     { id: 'gallery', label: 'คลังรูปภาพ' },
@@ -24,6 +24,8 @@ export default function Navbar({ currentTab, setCurrentTab }) {
     { id: 'art', label: 'งานศิลปะ' },
     { id: 'admin', label: 'ระบบหลังบ้าน' }
   ];
+
+  const navItems = allNavItems.filter(item => item.id !== 'admin' || showAdminTab);
 
   return (
     <header className="header-nav">
